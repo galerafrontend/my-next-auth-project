@@ -2,6 +2,10 @@ import { hashPassword } from "../../../helpers/authUtil";
 import { connectToDatabase } from "../../../helpers/dbUtil";
 
 const handler = async (req, res) => {
+  if (req.method !== "POST") {
+    return;
+  }
+
   const data = req.body;
 
   const { email, password } = data;
@@ -10,7 +14,7 @@ const handler = async (req, res) => {
     !email ||
     !email.includes("@") ||
     !password ||
-    !password.trim().length < 7
+    password.trim().length < 7
   ) {
     res.status(422).json({
       message:
@@ -21,7 +25,7 @@ const handler = async (req, res) => {
 
   const client = await connectToDatabase();
   const db = client.db();
-  const hashedPassword = hashPassword(password);
+  const hashedPassword = await hashPassword(password);
 
   const result = await db.collection("users").insertOne({
     email: email,
