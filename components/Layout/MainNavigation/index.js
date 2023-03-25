@@ -1,9 +1,13 @@
-import { useSession } from "next-auth/client";
+import { signOut, useSession } from "next-auth/client";
 import Link from "next/link";
 import classes from "./styles.module.css";
 
 const MainNavigation = () => {
   const [session, loading] = useSession();
+
+  const logoutHandler = () => {
+    signOut();
+  };
 
   return (
     <header className={classes.header}>
@@ -24,7 +28,7 @@ const MainNavigation = () => {
           )}
           {session && (
             <li>
-              <button>Logout</button>
+              <button onClick={logoutHandler}>Logout</button>
             </li>
           )}
         </ul>
