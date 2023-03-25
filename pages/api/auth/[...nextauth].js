@@ -13,7 +13,7 @@ export default NextAuth({
         const client = await connectToDatabase();
 
         const userCollection = client.db().collection("users");
-        const user = await userCollection.findOne({ email: email.Credentials });
+        const user = await userCollection.findOne({ email: credentials.email });
 
         if (!user) {
           client.close();
