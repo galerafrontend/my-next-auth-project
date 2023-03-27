@@ -33,7 +33,7 @@ const handler = async (req, res) => {
   const passwordsAreEqual = await verifyPassword(oldPassword, currentPassword);
 
   if (!passwordsAreEqual) {
-    res.status(403), json({ message: "Invalid password!" });
+    res.status(403).json({ message: "Invalid password!" });
     client.close();
     return;
   }
